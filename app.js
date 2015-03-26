@@ -5,10 +5,15 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var app = express();
+
+var http = require('http');
+var server = http.createServer(app);
+
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -56,5 +61,17 @@ app.use(function(err, req, res, next) {
   });
 });
 
+//Servidor Cloud9/local
+var port = process.env.PORT || 8080 || 3000, ip = process.env.IP || "127.0.0.1";
+
+//app.listen(port, ip);
+server.listen(port, ip); /////twitter
+
+
+//servidor heroku
+//var port = process.env.PORT || 5000; // Use the port that Heroku provides or default to 5000
+//app.listen(port);
+
+console.log('Listening in port ' + port);
 
 module.exports = app;
